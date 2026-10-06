@@ -1,0 +1,21 @@
+resources:
+  pipelines:
+    pipeline_citybike_etl_pipeline:
+      name: citybike_etl_pipeline
+      configuration:
+        catalog: "${var.catalog}"
+      libraries:
+        - notebook:
+            path: ../src/citibike_etl/delta live table(dlt)/01_bronze/01_bronze_citybike.ipynb
+        - notebook:
+            path: ../src/citibike_etl/delta live table(dlt)/02_silver/02_silver_citybike.ipynb
+        - notebook:
+            path: ../src/citibike_etl/delta live table(dlt)/03_gold/03_gold_citybike_daily_ride_summary.ipynb
+        - notebook:
+            path: ../src/citibike_etl/delta live table(dlt)/03_gold/03_gold_citybike_daily_station_performance.ipynb
+      schema: default
+      development: "${var.dev_flag}"
+      photon: true
+      catalog: "${var.catalog}"
+      serverless: true
+      

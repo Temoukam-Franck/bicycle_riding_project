@@ -1,0 +1,46 @@
+resources:
+  jobs:
+    citybike_etl_pipeline:
+      name: " citybike_etl_pipeline"
+      tasks:
+        - task_key: 01_bronze_citybike
+          notebook_task:
+            notebook_path: ../src/notebooks/01_bronze/01_bronze_citybike.ipynb
+            base_parameters:
+              pipeline_id: "{{job.id}}"
+              run_id: "{{job.run_id}}"
+              task_id: "{{task.run_id}}"
+              processed_timestamp: "{{job.start_time.iso_datetime}}"
+              catalog: "${var.catalog}"
+            source: WORKSPACE
+        - task_key: 02_silver_citybike
+          depends_on:
+            - task_key: 01_bronze_citybike
+          notebook_task:
+            notebook_path: ../src/notebooks/02_silver/02_silver_citybike.ipynb
+            base_parameters:
+              pipeline_id: "{{job.id}}"
+              run_id: "{{job.run_id}}"
+              task_id: "{{task.run_id}}"
+              processed_timestamp: "{{job.start_time.iso_datetime}}"
+              catalog: "${var.catalog}"
+            source: WORKSPACE
+        - task_key: 03_gold_citybike_daily_station_performance
+          depends_on:
+            - task_key: 02_silver_citybike
+          notebook_task:
+            notebook_path: ../src/notebooks/gold/03_gold_city_daily_station_performance.ipynb
+            source: WORKSPACE
+            base_parameters:
+              catalog: "${var.catalog}"
+        - task_key: 03_gold_citybike_daily_ride_summary
+          depends_on:
+            - task_key: 02_silver_citybike
+          notebook_task:
+            notebook_path: ../src/notebooks/gold/03_gold_citybike_daily_ride_summary.ipynb
+            source: WORKSPACE
+            base_parameters:
+              catalog: "${var.catalog}"
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
