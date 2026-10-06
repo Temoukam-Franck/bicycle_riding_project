@@ -1,0 +1,65 @@
+# This is a Declarative Automation Bundle definition for bicycle_riding.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: bicycle_riding
+  uuid: 901bc273-acc0-43d9-b964-c49afe7b018b
+
+include:
+  - resources/*.yml
+
+artifacts:
+  python_artifact:
+    type: whl
+    build: uv build --wheel
+
+# Variable declarations. These variables are assigned in the dev/prod targets below.
+variables:
+  catalog:
+    default: citybike_dev
+  dev_flag:
+    default: true
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-26ed86fb-114b.cloud.databricks.com
+    variables:
+      catalog: 
+        default: citybike_dev
+
+  
+  test:
+    mode: production
+    presets:
+      name_prefix: "[test temoukamfranck]"
+    workspace:
+      host: https://dbc-26ed86fb-114b.cloud.databricks.com
+      # We explicitly deploy to /Workspace/Users/temoukamfranck@yahoo.fr to make sure we only have a single copy.
+      root_path: /Workspace/Users/temoukamfranck@yahoo.fr/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: 
+          default: citybike_test
+      dev_flag:
+        default: false
+  
+          
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-26ed86fb-114b.cloud.databricks.com
+      # We explicitly deploy to /Workspace/Users/temoukamfranck@yahoo.fr to make sure we only have a single copy.
+      root_path: /Workspace/Users/temoukamfranck@yahoo.fr/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: 
+          default: citybike_prod
+      dev_flag:
+        default: false
+    permissions:
+      - user_name: temoukamfranck@yahoo.fr
+        level: CAN_MANAGE
