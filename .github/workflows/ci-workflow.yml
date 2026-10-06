@@ -27,5 +27,5 @@ jobs:
         working-directory: bicycle_riding
         run: databricks bundle validate
         env:
-          DATABRICKS_HOST: ${{ FIRST_SECRET.https://dbc-26ed86fb-114b.cloud.databricks.com/browse?o=7474655166986599 }}
+          DATABRICKS_HOST: ${{ FIRST_SECRET.https://dbc-26ed86fb-114b.cloud.databricks.com/browse/folders/1388272585228683?o=7474655166986599 }}
           DATABRICKS_TOKEN: ${{ FIRST_SECRET.dapia0f13deb634d760ba0e5b484ad11b0e9 }}
