@@ -27,3 +27,4 @@ jobs:
         run: databricks bundle validate
         env:
           DATABRICKS_TOKEN: ${{ secrets.CITY_TOKEN }}
+          DATABRICKS8BUNDLE_ENV: prod
