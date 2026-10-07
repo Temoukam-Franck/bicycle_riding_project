@@ -26,5 +26,4 @@ jobs:
         working-directory: bicycle_riding
         run: databricks bundle validate
         env:
-          DATABRICKS_HOST: ${{ secrets.https://dbc-26ed86fb-114b.cloud.databricks.com }}
           DATABRICKS_TOKEN: ${{ secrets.CITY_TOKEN }}
