@@ -32,21 +32,6 @@ targets:
     variables:
       catalog: 
         default: citybike_dev
-
-  
-  test:
-    mode: production
-    presets:
-      name_prefix: "[test temoukamfranck]"
-    workspace:
-      host: https://dbc-26ed86fb-114b.cloud.databricks.com
-      # We explicitly deploy to /Workspace/Users/temoukamfranck@yahoo.fr to make sure we only have a single copy.
-      root_path: /Workspace/Users/temoukamfranck@yahoo.fr/.bundle/${bundle.name}/${bundle.target}
-    variables:
-      catalog: 
-          default: citybike_test
-      dev_flag:
-        default: false
   
           
   prod:
