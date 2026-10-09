@@ -1,30 +1,28 @@
-name: CI workflow
+name: 'CI_WORKFLOW'
+
+concurrency: 1
+
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: 
+      - main 
+    paths:
+      - 'bakehouse_analytics/**'
 
 jobs:
-  validate-bundle:
-    name: "Validate Databricks Asset Bundle"
+  deploy:
+    name: "deploy bundle"
+    
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      
+      - uses: databricks/setup-cli@main
+      
+      - run: databricks bundle deploy
+        working-directory: bakehouse_analytics
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install Databricks CLI
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
-
-      - name: Validate Bundle Configuration
-        working-directory: bicycle_riding
-        run: databricks bundle validate
         env:
           DATABRICKS_TOKEN: ${{ secrets.CITY_TOKEN }}
-          DATABRICKS8BUNDLE_ENV: prod
+          DATABRICKS_BUNDLE_ENV: prod
