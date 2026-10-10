@@ -1,0 +1,28 @@
+name: 'CI_WORKFLOW'
+
+concurrency: 1
+
+on:
+  push:
+    branches: 
+      - main 
+    paths:
+      - 'bakehouse_analytics/**'
+
+jobs:
+  deploy:
+    name: "deploy bundle"
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: databricks/setup-cli@main
+      
+      - run: databricks bundle deploy
+        working-directory: bakehouse_analytics
+
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.CITY_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: prod
