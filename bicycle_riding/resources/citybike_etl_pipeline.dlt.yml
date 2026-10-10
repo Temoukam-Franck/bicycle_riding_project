@@ -14,7 +14,6 @@ resources:
         - notebook:
             path: ../src/citibike_etl/delta live table(dlt)/03_gold/03_gold_citybike_daily_station_performance.ipynb
       schema: default
-      development: "${var.dev_flag}"
       photon: true
       catalog: "${var.catalog}"
       serverless: true

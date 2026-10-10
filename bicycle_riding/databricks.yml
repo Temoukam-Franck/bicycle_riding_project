@@ -16,8 +16,6 @@ artifacts:
 variables:
   catalog:
     default: citybike_dev
-  dev_flag:
-    default: true
 
 targets:
   dev:
@@ -43,8 +41,6 @@ targets:
     variables:
       catalog: 
           default: citybike_prod
-      dev_flag:
-          default: false
       
     permissions:
       - user_name: temoukamfranck@yahoo.fr
