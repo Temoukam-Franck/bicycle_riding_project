@@ -44,7 +44,8 @@ targets:
       catalog: 
           default: citybike_prod
       dev_flag:
-        default: false
+          default: false
+      
     permissions:
       - user_name: temoukamfranck@yahoo.fr
         level: CAN_MANAGE
