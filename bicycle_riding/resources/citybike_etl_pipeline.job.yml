@@ -1,7 +1,7 @@
 resources:
   jobs:
     citybike_etl_pipeline:
-      name: "citybike_etl_pipeline"
+      name: " citybike_etl_pipeline"
       tasks:
         - task_key: 01_bronze_citybike
           notebook_task:
