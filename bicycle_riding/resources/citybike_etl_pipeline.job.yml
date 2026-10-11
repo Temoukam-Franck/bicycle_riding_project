@@ -13,9 +13,6 @@ resources:
               processed_timestamp: "{{job.start_time.iso_datetime}}"
               catalog: "${var.catalog}"
             source: WORKSPACE
-          environment:
-            dependencies:
-              - ${artifacts.python_artifact.file_path}
 
         - task_key: 02_silver_citybike
           depends_on:
@@ -29,9 +26,6 @@ resources:
               processed_timestamp: "{{job.start_time.iso_datetime}}"
               catalog: "${var.catalog}"
             source: WORKSPACE
-          environment:
-            dependencies:
-              - ${artifacts.python_artifact.file_path}
 
         - task_key: 03_gold_citybike_daily_station_performance
           depends_on:
@@ -41,9 +35,6 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: "${var.catalog}"
-          environment:
-            dependencies:
-              - ${artifacts.python_artifact.file_path}
 
         - task_key: 03_gold_citybike_daily_ride_summary
           depends_on:
@@ -53,9 +44,6 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: "${var.catalog}"
-          environment:
-            dependencies:
-              - ${artifacts.python_artifact.file_path}
 
       queue:
         enabled: true
