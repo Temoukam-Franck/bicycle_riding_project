@@ -13,6 +13,7 @@ resources:
               processed_timestamp: "{{job.start_time.iso_datetime}}"
               catalog: "${var.catalog}"
             source: WORKSPACE
+
         - task_key: 02_silver_citybike
           depends_on:
             - task_key: 01_bronze_citybike
@@ -25,6 +26,7 @@ resources:
               processed_timestamp: "{{job.start_time.iso_datetime}}"
               catalog: "${var.catalog}"
             source: WORKSPACE
+
         - task_key: 03_gold_citybike_daily_station_performance
           depends_on:
             - task_key: 02_silver_citybike
@@ -33,6 +35,7 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: "${var.catalog}"
+
         - task_key: 03_gold_citybike_daily_ride_summary
           depends_on:
             - task_key: 02_silver_citybike
@@ -41,6 +44,7 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: "${var.catalog}"
+
       queue:
         enabled: true
       performance_target: PERFORMANCE_OPTIMIZED
